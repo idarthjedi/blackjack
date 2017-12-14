@@ -47,12 +47,24 @@ class Person(object):
     """
     Class for Person
     """
+    cardhand = []
+
     def __init__(self, name):
         self.name = name
         pass
 
     def greet(self):
         print("Hello %s, welcome to BlackJack!" % self.name)
+
+    def cleanhand(self):
+        self.cardhand.clear()
+
+    @property
+    def cards(self):
+        return self.cardhand
+
+    def addcards(self, cards):
+        self.cardhand = self.cardhand + cards
 
 
 class Deck(object):
@@ -86,7 +98,7 @@ class Deck(object):
         animation = "|/-\\"
         idx = 0
         loop = 0
-        while loop < 50:
+        while loop < 30:
             print('Shuffling card deck, please wait: ' + BColors.FAIL +
                   animation[idx % len(animation)] + BColors.ENDC +
                   '\r', end='')
@@ -96,21 +108,41 @@ class Deck(object):
 
         # Shuffle 3 times to make sure it's really good!
         for loop in range(1, 4):
+            #print(self.cardcollection)
             shuffle(self.cardcollection)
+
+    def deal(self, count):
+        if (count < 1) or (count > len(self.cardcollection)):
+            print(BColors.FAIL + "Not enough cards left in the deck" + BColors.ENDC)
+        else:
+            tempcollection = []
+            for card in range(0,count):
+                tempcollection.append(self.cardcollection.pop(0))
+            #print("Popped Cards %s" % tempcollection)
+            #print("Left over collection %s" % self.cardcollection)
+            return tempcollection
 
 
 def main():
     introduction()
 
     username = input("Please enter your name: ")
-
+    # Create objects for both the user and the dealer
     user = Person(username)
     dealer = Person("Dealer")
+
+    # Greet the user
     user.greet()
 
+    # Generate the Deck
     d = Deck()
+
+    # Shuffle the Deck
     d.shuffle()
 
+    # Deal the first two cards
+    user.addcards(d.deal(2))
+    dealer.addcards(d.deal(2))
 
 
 main()
