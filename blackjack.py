@@ -181,12 +181,14 @@ class Deck(object):
                 tempcollection.append(self.__cardcollection.pop(0))
             return tempcollection
 
+
 def displayuserscards(user):
     print(BColors.FAIL)
     print("Display %s's hand" % user.name)
     print(BColors.ENDC)
 
     return user.displaycards
+
 
 def hitorstay():
     validanswer = False
@@ -195,6 +197,7 @@ def hitorstay():
         if (str(answer).lower() == "s") or (str(answer).lower() == "h"):
             validanswer = True
             return answer
+
 
 def main():
     introduction()
