@@ -193,7 +193,7 @@ def displayuserscards(user):
 def hitorstay():
     validanswer = False
     while not validanswer:
-        answer = input("Would you like to [h] or [s]: (h/s) ")
+        answer = input("Would you like to [h]it or [s]tay: (h/s) ")
         if (str(answer).lower() == "s") or (str(answer).lower() == "h"):
             validanswer = True
             return answer
